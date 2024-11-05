@@ -1,40 +1,36 @@
 body {
     display: flex;
     justify-content: center;
-    /* Center the content horizontally */
     align-items: stretch;
     height: 100vh;
     margin: 0;
     font-family: 'Computer Modern', serif;
-    /* LaTeX-like font */
     background-color: #ccc;
-    /* Light background to resemble LaTeX */
 }
 
 .wrapper {
     display: flex;
     align-items: stretch;
-    /* Ensure both elements stretch to the same height */
+    flex-wrap: wrap;
+    /* Allow items to wrap */
     margin: 20px;
-    /* Add margin for spacing from the top */
 }
 
 .container {
     flex: 1;
-    /* Allows the container to grow and take available space */
-    width: 800px;
+    max-width: 800px;
+    /* Use max-width instead of fixed width */
+    width: 100%;
+    /* Allow full width */
     padding: 20px 50px 20px 30px;
     /* Top, Right, Bottom, Left */
     background-color: #ffffff;
-    /* White background for the resume */
     border: 1px solid #ccc;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     overflow-y: auto;
     font-size: 14px;
-    /* Font size similar to LaTeX */
     line-height: 1.6;
-    /* Line height for readability */
     margin-left: 10px;
     /* Space between sidebar and container */
     scrollbar-width: none;
@@ -44,139 +40,93 @@ body {
 .contact-info {
     display: flex;
     align-items: center;
+    flex-wrap: wrap;
+    /* Allow wrapping of icons and text */
 }
 
 .contact-info a {
     margin-right: 15px;
-    /* Space between the icons */
     color: black;
-    /* Set text color to black */
     text-decoration: none;
-    /* Remove underline */
 }
 
 .contact-info a:hover {
     text-decoration: underline;
-    /* Optional: underline on hover */
 }
 
 .contact-icon {
     width: 16px;
-    /* Adjust size as needed */
     height: 16px;
-    /* Adjust size as needed */
     margin-right: 5px;
-    /* Space between icon and text */
     vertical-align: middle;
-    /* Aligns the icon with text */
 }
-
 
 .icon {
     display: inline-flex;
-    /* Align items in a flex container */
     align-items: center;
-    /* Center items vertically */
     justify-content: center;
-    /* Center items horizontally */
     width: 24px;
-    /* Set icon width */
     height: 24px;
-    /* Set icon height */
     border: 1px solid #ccc;
-    /* Light gray border */
     border-radius: 5px;
-    /* Rounded corners */
     padding: 5px;
-    /* Inner spacing */
     margin: 4px;
-    /* Outer spacing between icons */
     transition: border-color 0.3s ease, box-shadow 0.3s ease;
-    /* Smooth transition for hover effects */
     cursor: pointer;
-    /* Change cursor to pointer on hover */
     background-color: #ffffff;
-    /* White background */
 }
 
 .icon img {
     width: 100%;
-    /* Ensure image fills the icon space */
     height: auto;
-    /* Maintain aspect ratio */
 }
 
 .icon:hover {
     border-color: #671800;
-    /* Change border color on hover */
     box-shadow: 0px 2px 5px rgba(103, 24, 0, 0.3);
-    /* Shadow effect on hover */
 }
 
 .sidebar {
     display: flex;
-    /* Use flexbox layout */
     flex-direction: column;
-    /* Stack items vertically */
     align-items: center;
-    /* Center items horizontally */
     padding: 0;
-    /* Remove padding */
 }
 
 .sidebar .icon {
     margin: 0;
-    /* Remove default margin */
     margin-bottom: 10px;
-    /* Space out buttons vertically */
 }
 
 button.icon {
     all: unset;
-    /* Remove default button styles */
     display: flex;
-    /* Use flexbox for button content */
     flex-direction: column;
-    /* Stack button content vertically */
     align-items: center;
-    /* Center content */
     justify-content: center;
-    /* Center content */
     width: 24px;
-    /* Set button width */
     height: auto;
-    /* Auto height based on content */
     cursor: pointer;
-    /* Change cursor to pointer on hover */
     padding: 5px;
-    /* Inner spacing */
     border-radius: 5px;
-    /* Rounded corners */
     background-color: #ffffff;
-    /* White background */
 }
 
 button.icon:hover,
 a.icon:hover {
     border-color: #671800;
-    /* Change border color on hover */
     box-shadow: 0px 2px 5px rgba(103, 24, 0, 0.3);
-    /* Shadow effect on hover */
 }
 
 .print-button span,
 .download-button span {
     line-height: 1.2;
-    /* Space between lines */
     margin: 0;
-    /* Remove default margin */
     padding: 0;
-    /* Remove default padding */
 }
 
 .section-title {
     color: #671800;
-    /* HEX: #671800 #7d253d */
     font-size: 1.5em;
     font-weight: bold;
     margin-bottom: 0.2em;
@@ -184,7 +134,6 @@ a.icon:hover {
 
 .section-divider {
     border: 1px solid #671800;
-    /* HEX: #671800 #7d253d */
     margin-bottom: 1em;
 }
 
@@ -216,83 +165,54 @@ a.icon:hover {
 
 .skills-table {
     width: 95%;
-    /* Adjust the width to be 90% of the container */
     max-width: 800px;
-    /* Optional: set a maximum width */
+    /* Maintain max-width */
     margin: 0 auto;
-    /* Center the table */
     border-collapse: collapse;
-    /* Collapse borders for a cleaner look */
     border: 1px solid #671800;
-    /* Add border to the table */
 }
 
 .skills-cell {
     width: 85%;
-    /* Set the width of the skills cell to 85% */
     border: 1px solid #671800;
-    /* Add border to each cell */
     padding: 5px;
-    /* Add some padding for better spacing */
 }
 
 .experience-cell {
     width: 10%;
-    /* Set the width of the experience cell to 15% */
     border: 1px solid #671800;
-    /* Add border to each cell */
     padding: 5px;
-    /* Add some padding for better spacing */
     text-align: left;
-    /* Align text to the left */
 }
 
 .skill-item {
     display: inline-block;
-    /* Keep skill items inline */
     border: 1px solid #671800;
-    /* Border around skill items */
     border-radius: 5px;
-    /* Rounded corners */
     padding: 5px 10px;
-    /* Padding inside skill items */
     margin: 5px;
-    /* Margin around skill items */
     white-space: nowrap;
-    /* Prevent line breaks */
 }
 
 .languages-container {
     margin-bottom: 1em;
-    /* Add margin below the container */
 }
 
 .languages-list {
     list-style-type: none;
-    /* Remove default list styling */
     padding: 0;
-    /* Remove padding */
     display: flex;
-    /* Use flexbox for layout */
     flex-wrap: wrap;
-    /* Allow wrapping */
 }
 
 .language-item {
     background-color: #f8f8f8;
-    /* Light background color */
     border: 1px solid #671800;
-    /* Border color matching the theme */
     border-radius: 5px;
-    /* Rounded corners */
     padding: 8px 12px;
-    /* Padding inside each item */
     margin: 5px;
-    /* Margin between items */
     font-weight: bold;
-    /* Bold font for emphasis */
     white-space: nowrap;
-    /* Prevent line breaks */
 }
 
 .education-container {
@@ -303,26 +223,46 @@ a.icon:hover {
     margin-bottom: 1em;
     padding: 10px;
     border: 1px solid #ccc;
-    /* Optional border for each item */
     border-radius: 5px;
-    /* Rounded corners */
     background-color: #f9f9f9;
-    /* Light background */
 }
 
 .university-name {
     font-weight: bold;
     color: #671800;
-    /* Customize color as needed */
 }
 
 .education-dates {
     font-style: italic;
     color: #666;
-    /* Light color for the dates */
 }
 
 .education-description {
     margin-top: 0.5em;
-    /* Space above the description */
+}
+
+/* Responsive adjustments */
+@media (max-width: 600px) {
+    .contact-info {
+        flex-direction: column;
+        /* Stack icons and text */
+        align-items: flex-start;
+        /* Align items to start */
+    }
+
+    .icon {
+        width: 20px;
+        /* Smaller icon size on small screens */
+        height: 20px;
+    }
+
+    .container {
+        padding: 10px;
+        /* Reduce padding for smaller screens */
+    }
+
+    .sidebar {
+        align-items: flex-start;
+        /* Align sidebar items to start */
+    }
 }
