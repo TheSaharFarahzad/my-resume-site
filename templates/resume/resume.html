@@ -1,0 +1,193 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ user.first_name }} {{ user.last_name }} - Resume</title>
+    <link rel="stylesheet" href="{% static 'resume/style.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+
+<body>
+    <div class="wrapper">
+
+        <div class="sidebar">
+            <button class="icon" title="Home" id="linkedin-button">
+                <img src="{% static 'resume/icons/home.png' %}" alt="Home" />
+            </button>
+            <button class="print-button icon" title="Print">
+                <span>p</span><span>r</span><span>i</span><span>n</span><span>t</span>
+            </button>
+            <button class="download-button icon" title="Download">
+                <span>d</span><span>o</span><span>w</span><span>n</span><span>l</span><span>o</span><span>a</span><span>d</span>
+            </button>
+            <button class="icon" title="Download as SVG" onclick="downloadResumeAsSVG()">
+                <img src="{% static 'resume/icons/svg.png' %}" alt="Download as SVG" />
+            </button>
+            <button class="icon" title="Download as PNG" onclick="downloadResumeAsImage('png')">
+                <img src="{% static 'resume/icons/png.png' %}" alt="Download as PNG" />
+            </button>
+            <button class="icon" title="Download as JPG" onclick="downloadResumeAsImage('jpg')">
+                <img src="{% static 'resume/icons/jpg.png' %}" alt="Download as JPG" />
+            </button>
+        </div>
+
+        <div class="container">
+            <h1>{{ user.first_name }} {{ user.last_name }}</h1>
+            <h2 class="section-title">{{ user.job_title }}</h2>
+            <p class="contact-info">
+                <a href="mailto:{{ user.email }}">
+                    <img src="{% static 'resume/icons/email.png' %}" alt="Email Icon" class="contact-icon">
+                    {{ user.email }}
+                </a>
+                <a href="tel:{{ user.phone_number }}">
+                    <img src="{% static 'resume/icons/phone.png' %}" alt="Phone Icon" class="contact-icon">
+                    {{ user.phone_number }}
+                </a>
+            </p>
+            <div>
+                {% for sm in social_media_links %}
+                <a href="{{ sm.url }}" target="_blank" class="icon">
+                    <img src="{% static sm.icon %}" alt="{{ sm.platform }}">
+                </a>
+                {% endfor %}
+            </div>
+
+            <section class="resume-content pdf-container">
+                <h2 class="section-title">Qualifications Summary</h2>
+                <hr class="section-divider">
+                <p>{{ user.about }}</p>
+
+                <h2 class="section-title">Work Experiences</h2>
+                <hr class="section-divider">
+                {% for experience in experiences %}
+                <div class="experience-entry">
+                    <p class="experience-role">{{ experience.role }} at {{ experience.company }}</p>
+                    <p class="date-location">
+                        <i class="fa-solid fa-calendar-days"></i> {{ experience.start_date|date:"M Y" }} -
+                        {% if experience.end_date %}{{ experience.end_date|date:"M Y" }}{% else %}Present{% endif %}
+                        <i class="fa-solid fa-location-dot"></i> {{ experience.company_address }}
+                    </p>
+                    <ul class="task-list">
+                        {% for task in experience.task_description.splitlines %}
+                        <li>{{ task }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                {% empty %}
+                <p>No work experience available.</p>
+                {% endfor %}
+
+                <h2 class="section-title">Skills</h2>
+                <hr class="section-divider">
+                <table class="skills-table">
+                    <tbody>
+                        {% for years, skills in grouped_skills.items %}
+                        <tr>
+                            <td class="experience-cell">{{ years }} years</td>
+                            <td class="skills-cell">
+                                <div class="skills-container">
+                                    {% for skill in skills %}
+                                    <div class="skill-item">{{ skill }}</div>
+                                    {% endfor %}
+                                </div>
+                            </td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="2">No skills listed.</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+
+                <h2 class="section-title">Languages</h2>
+                <hr class="section-divider">
+                <div class="languages-container">
+                    {% if languages %}
+                    <ul class="languages-list">
+                        {% for language in languages %}
+                        <li class="language-item">{{ language.language_name }} ({{ language.proficiency_level }})</li>
+                        {% endfor %}
+                    </ul>
+                    {% else %}
+                    <p>No languages listed.</p>
+                    {% endif %}
+                </div>
+
+                <h2 class="section-title">Education</h2>
+                <hr class="section-divider">
+                {% for edu in education %}
+                <h3 class="university-name">{{ edu.university_name }}</h3>
+                <p>{{ edu.degree }} in {{ edu.field_of_study }}</p>
+                <p class="date-location">
+                    <i class="fa-solid fa-calendar-days"></i> {{ edu.start_date|date:"M Y" }} -
+                    {% if edu.end_date %}{{ edu.end_date|date:"M Y" }}{% else %}Present{% endif %}
+                    <i class="fa-solid fa-location-dot"></i> {{ edu.university_address }}
+                </p>
+                {% empty %}
+                <p>No education listed.</p>
+                {% endfor %}
+            </section>
+
+        </div>
+    </div> <!-- Closing the new wrapper div -->
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js"></script>
+
+    <script>
+        // Get the LinkedIn URL from the Django context
+        const linkedinUrl = "{% for link in social_media_links %}{% if link.platform == 'LinkedIn' %}{{ link.url }}{% endif %}{% endfor %}";
+
+        document.getElementById('linkedin-button').addEventListener('click', function () {
+            // Redirect to the LinkedIn URL
+            if (linkedinUrl) {
+                window.location.href = linkedinUrl;
+            } else {
+                alert('LinkedIn link not found.');
+            }
+        });
+
+        document.querySelector('.print-button').onclick = function () {
+            window.print();
+        };
+
+        document.querySelector('.download-button').onclick = function () {
+            const element = document.querySelector('.pdf-container');
+            const opt = {
+                margin: 1,
+                filename: 'resume.pdf',
+                image: { type: 'jpeg', quality: 0.98 },
+                html2canvas: { scale: 2 },
+                jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
+            };
+
+            html2pdf().from(element).set(opt).save();
+        };
+
+        function downloadResumeAsImage(format) {
+            const element = document.querySelector('.container');
+
+            html2canvas(element).then(canvas => {
+                const link = document.createElement('a');
+                link.download = `resume.${format}`;
+                link.href = canvas.toDataURL(format === 'png' ? 'image/png' : 'image/jpeg');
+                link.click();
+            });
+        }
+
+        function downloadResumeAsSVG() {
+            const element = document.querySelector('.container');
+            const svgData = new XMLSerializer().serializeToString(element);
+            const link = document.createElement('a');
+            link.download = 'resume.svg';
+            link.href = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svgData);
+            link.click();
+        }
+    </script>
+</body>
+
+</html>
