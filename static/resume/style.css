@@ -4,7 +4,7 @@ body {
     align-items: stretch;
     height: 100vh;
     margin: 0;
-    font-family: 'Computer Modern', serif;
+    font-family: 'Arial', serif;
     background-color: #ccc;
 }
 
@@ -35,6 +35,28 @@ body {
     /* Space between sidebar and container */
     scrollbar-width: none;
     /* Hide scrollbar for Firefox */
+}
+
+.container-photo-profile {
+    width: 50%;              
+    max-width: 300px;         
+            border-radius: 100%;   
+               
+    display: flex;            
+    
+   
+}
+
+.container-photo-profile img {
+    width: 100%;              
+    height: auto;             
+ 
+    object-fit: cover;       
+}
+
+.container-info-bio{
+    display: flex;
+    gap: 1em;
 }
 
 .contact-info {

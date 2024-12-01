@@ -14,9 +14,7 @@
     <div class="wrapper">
 
         <div class="sidebar">
-            <button class="icon" title="Home" id="linkedin-button">
-                <img src="{% static 'resume/icons/home.png' %}" alt="Home" />
-            </button>
+           
             <button class="print-button icon" title="Print">
                 <span>p</span><span>r</span><span>i</span><span>n</span><span>t</span>
             </button>
@@ -35,8 +33,16 @@
         </div>
 
         <div class="container">
-            <h1>{{ user.first_name }} {{ user.last_name }}</h1>
-            <h2 class="section-title">{{ user.job_title }}</h2>
+            <div class="container-info-bio">
+                <div class="container-photo-profile">
+                    <img src="{% static 'images/photo_profile.jpg' %}">
+                </div>
+                <div>
+                     <h1>{{ user.first_name }} {{ user.last_name }}</h1>
+                     <h2 class="section-title">{{ user.job_title }}</h2>
+                 </div>
+            </div>
+           
             <p class="contact-info">
                 <a href="mailto:{{ user.email }}">
                     <img src="{% static 'resume/icons/email.png' %}" alt="Email Icon" class="contact-icon">
@@ -55,7 +61,7 @@
                 {% endfor %}
             </div>
 
-            <section class="resume-content pdf-container">
+            <section class="resume-content">
                 <h2 class="section-title">Qualifications Summary</h2>
                 <hr class="section-divider">
                 <p>{{ user.about }}</p>
@@ -142,21 +148,13 @@
         // Get the LinkedIn URL from the Django context
         const linkedinUrl = "{% for link in social_media_links %}{% if link.platform == 'LinkedIn' %}{{ link.url }}{% endif %}{% endfor %}";
 
-        document.getElementById('linkedin-button').addEventListener('click', function () {
-            // Redirect to the LinkedIn URL
-            if (linkedinUrl) {
-                window.location.href = linkedinUrl;
-            } else {
-                alert('LinkedIn link not found.');
-            }
-        });
 
         document.querySelector('.print-button').onclick = function () {
             window.print();
         };
 
         document.querySelector('.download-button').onclick = function () {
-            const element = document.querySelector('.pdf-container');
+            const element = document.querySelector('.container');
             const opt = {
                 margin: 1,
                 filename: 'resume.pdf',
