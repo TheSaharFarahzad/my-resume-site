@@ -1,7 +1,6 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.conf import settings
-from django.db import models
 
 
 class User(AbstractUser):
@@ -10,6 +9,14 @@ class User(AbstractUser):
     address = models.CharField(max_length=255, blank=True)
     phone_number = models.CharField(max_length=15, blank=True)
     about = models.TextField(blank=True)
+    profile_picture = models.ImageField(
+        upload_to="profile_pictures/",
+        blank=True,
+        null=True,
+    )
+
+    def __str__(self):
+        return self.username
 
     def __str__(self):
         return f"{self.first_name} {self.last_name}"
@@ -21,7 +28,11 @@ class SocialMedia(models.Model):
     )
     platform = models.CharField(max_length=50)
     url = models.URLField()
-    icon = models.CharField(max_length=50, blank=True)
+    icon = models.ImageField(
+        upload_to="resume/icons/",
+        blank=False,
+        null=False,
+    )
 
     def __str__(self):
         return f"{self.platform} ({self.url})"

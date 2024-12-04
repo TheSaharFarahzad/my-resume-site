@@ -39,7 +39,12 @@ If you want to set up the project on your local machine, follow these steps:
    python manage.py migrate
    ```
 
-6. **Run the Development Server:**
+6. **Populate the Database (Optional):**
+   ```bash
+   python manage.py populate_db
+   ```
+
+7. **Run the Development Server:**
    ```bash
    python manage.py runserver
    ```
