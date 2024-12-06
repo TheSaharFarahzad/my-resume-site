@@ -39,7 +39,10 @@
                 </div>
                 <div>
                     <h1>{{ user.first_name }} {{ user.last_name }}</h1>
-                    <h2 class="section-title">{{ user.job_title }}</h2>
+                    <h2 class="section-title">
+                        {{ user.job_title_main }}
+                        {% if user.job_title_details %} {{ user.job_title_details }} {% endif %}
+                    </h2>
                 </div>
             </div>
 
@@ -139,7 +142,7 @@
             </section>
 
         </div>
-    </div> <!-- Closing the new wrapper div -->
+    </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js"></script>

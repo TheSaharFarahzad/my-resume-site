@@ -5,7 +5,8 @@ from django.conf import settings
 
 class User(AbstractUser):
     birthday = models.DateField(blank=True, null=True)
-    job_title = models.CharField(max_length=100, blank=True)
+    job_title_main = models.CharField(max_length=100, blank=True)
+    job_title_details = models.CharField(max_length=100, blank=True)
     address = models.CharField(max_length=255, blank=True)
     phone_number = models.CharField(max_length=15, blank=True)
     about = models.TextField(blank=True)

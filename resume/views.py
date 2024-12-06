@@ -28,6 +28,9 @@ def resume_view(request):
         "grouped_skills": sorted_grouped_skills,  # Pass the sorted grouped skills dictionary
         "education": education,
         "languages": languages,
+        "job_title_main": user.job_title_main,
+        "job_title_details": user.job_title_details,
+        "profile_picture_url": user.profile_picture.url,
     }
 
     return render(request, "resume/resume.html", context)
