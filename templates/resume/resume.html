@@ -14,9 +14,7 @@
     <div class="wrapper">
 
         <div class="sidebar">
-            <button class="icon" title="Home" id="linkedin-button">
-                <img src="{% static 'resume/icons/home.png' %}" alt="Home" />
-            </button>
+
             <button class="print-button icon" title="Print">
                 <span>p</span><span>r</span><span>i</span><span>n</span><span>t</span>
             </button>
@@ -35,8 +33,19 @@
         </div>
 
         <div class="container">
-            <h1>{{ user.first_name }} {{ user.last_name }}</h1>
-            <h2 class="section-title">{{ user.job_title }}</h2>
+            <div class="container-info-bio">
+                <div class="container-photo-profile">
+                    <img src="{{ user.profile_picture.url }}" alt="Profile Picture">
+                </div>
+                <div>
+                    <h1>{{ user.first_name }} {{ user.last_name }}</h1>
+                    <h2 class="section-title">
+                        {{ user.job_title_main }}
+                        {% if user.job_title_details %} {{ user.job_title_details }} {% endif %}
+                    </h2>
+                </div>
+            </div>
+
             <p class="contact-info">
                 <a href="mailto:{{ user.email }}">
                     <img src="{% static 'resume/icons/email.png' %}" alt="Email Icon" class="contact-icon">
@@ -55,7 +64,7 @@
                 {% endfor %}
             </div>
 
-            <section class="resume-content pdf-container">
+            <section class="resume-content">
                 <h2 class="section-title">Qualifications Summary</h2>
                 <hr class="section-divider">
                 <p>{{ user.about }}</p>
@@ -133,7 +142,7 @@
             </section>
 
         </div>
-    </div> <!-- Closing the new wrapper div -->
+    </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js"></script>
@@ -142,26 +151,35 @@
         // Get the LinkedIn URL from the Django context
         const linkedinUrl = "{% for link in social_media_links %}{% if link.platform == 'LinkedIn' %}{{ link.url }}{% endif %}{% endfor %}";
 
-        document.getElementById('linkedin-button').addEventListener('click', function () {
-            // Redirect to the LinkedIn URL
-            if (linkedinUrl) {
-                window.location.href = linkedinUrl;
-            } else {
-                alert('LinkedIn link not found.');
-            }
-        });
 
         document.querySelector('.print-button').onclick = function () {
             window.print();
         };
 
         document.querySelector('.download-button').onclick = function () {
-            const element = document.querySelector('.pdf-container');
+            const element = document.querySelector('.container');
             const opt = {
                 margin: 1,
                 filename: 'resume.pdf',
                 image: { type: 'jpeg', quality: 0.98 },
-                html2canvas: { scale: 2 },
+                html2canvas: {
+                    scale: 1, // Set scale to avoid zooming issues
+                    useCORS: true, // Enable CORS to handle cross-origin images
+                    logging: true, // Enable logging to debug potential issues
+                    allowTaint: true, // Allow images from different origins
+                    foreignObjectRendering: true, // Ensure embedded objects are rendered
+                    x: 0, // Position fixes
+                    y: 0,
+                    width: element.offsetWidth, // Ensure it captures the right width
+                    height: element.offsetHeight, // Ensure it captures the full height
+                    onclone: function (document) {
+                        // Ensure that the images are properly loaded in the clone
+                        const images = document.querySelectorAll('img');
+                        images.forEach(img => {
+                            img.crossOrigin = 'Anonymous'; // Set CORS header for images
+                        });
+                    }
+                },
                 jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
             };
 

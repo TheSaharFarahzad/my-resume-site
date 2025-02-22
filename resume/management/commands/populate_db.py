@@ -21,7 +21,9 @@ class Command(BaseCommand):
             last_name="Farahzad",
             email="s.farahzad91@gmail.com",
             phone_number="+989126475339",
-            job_title="Backend Developer (Python / Django)",
+            profile_picture="profile_pictures/profile_picture.jpg",
+            job_title_main="Backend Developer",
+            job_title_details="Python / Django",
             about="Backend developer with 4+ years of experience in developing and designing websites and applications. Experienced with all stages of development. Delivered overall 95% bug-free websites. Fast learner and committed to clean code and high-quality API. Passionate about learning new skills and modern technologies.",
             password="1234.qaz",  # Consider using an environment variable for the password
             is_staff=True,
