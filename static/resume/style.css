@@ -177,6 +177,33 @@ a.icon:hover {
     .sidebar {
         display: none !important;
     }
+
+    .section-title {
+        break-before: auto;
+        break-after: avoid;
+    }
+
+    .experience-entry,
+    .education-item,
+    .skills-table,
+    .languages-container {
+        break-inside: avoid;
+        page-break-inside: avoid;
+    }
+
+    h2 {
+        break-before: page;
+        break-after: avoid;
+    }
+
+    h3 {
+        break-after: avoid;
+    }
+
+    ul,
+    ol {
+        break-before: avoid;
+    }
 }
 
 .task-list {

@@ -129,13 +129,15 @@
                 <h2 class="section-title">Education</h2>
                 <hr class="section-divider">
                 {% for edu in education %}
-                <h3 class="university-name">{{ edu.university_name }}</h3>
-                <p>{{ edu.degree }} in {{ edu.field_of_study }}</p>
-                <p class="date-location">
-                    <i class="fa-solid fa-calendar-days"></i> {{ edu.start_date|date:"M Y" }} -
-                    {% if edu.end_date %}{{ edu.end_date|date:"M Y" }}{% else %}Present{% endif %}
-                    <i class="fa-solid fa-location-dot"></i> {{ edu.university_address }}
-                </p>
+                <div class="education-item">
+                    <h3 class="university-name">{{ edu.university_name }}</h3>
+                    <p>{{ edu.degree }} in {{ edu.field_of_study }}</p>
+                    <p class="date-location">
+                        <i class="fa-solid fa-calendar-days"></i> {{ edu.start_date|date:"M Y" }} -
+                        {% if edu.end_date %}{{ edu.end_date|date:"M Y" }}{% else %}Present{% endif %}
+                        <i class="fa-solid fa-location-dot"></i> {{ edu.university_address }}
+                    </p>
+                </div>
                 {% empty %}
                 <p>No education listed.</p>
                 {% endfor %}
